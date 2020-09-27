@@ -2,9 +2,8 @@ package com.tutorial.crud.controller;
 
 
 import com.tutorial.crud.dto.Mensaje;
-import com.tutorial.crud.dto.facturacionDto;
+import com.tutorial.crud.dto.actualizarPollo;
 import com.tutorial.crud.dto.inventarioDto;
-import com.tutorial.crud.entity.facturacion;
 import com.tutorial.crud.entity.inventario;
 import com.tutorial.crud.service.ProductoService;
 import com.tutorial.crud.service.inventarioService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -77,5 +75,28 @@ public class inventarioController {
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
         inventarioservice.delete(id);
         return new ResponseEntity(new Mensaje("producto e inventario eliminado"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/updatepollo/{id}")
+    public ResponseEntity<?> updatepollo(@PathVariable("id")int id,
+                                         @RequestBody actualizarPollo update)
+    {
+        int valor=0,presa=0;
+        if(!inventarioservice.existsById(id))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        if(!inventarioservice.getOne(id).get().getProductoId().getTipo().equals("mercaderia"))
+            return new ResponseEntity(new Mensaje("no es el tipo"), HttpStatus.BAD_REQUEST);
+       inventario inventa=inventarioservice.getOne(id).get();
+        valor=inventa.getCantidadExist()-update.getPollo();
+        if(update.getPresa()>0){
+            valor--;
+            presa=8+inventa.getProductoId().getPresa();
+            presa=presa-update.getPresa();
+            inventa.getProductoId().setPresa(presa);
+        }
+        inventa.setCantidadExist(valor);
+        inventarioservice.save(inventa);
+        return new ResponseEntity(new Mensaje("Pollo actualizado"), HttpStatus.OK);
     }
 }
