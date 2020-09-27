@@ -59,8 +59,8 @@ public class AuthController {
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
         Rol rolUser = new Rol(RolNombre.ROLE_USER);
-        Optional<Rol> rol=rolService.getByRolNombre(RolNombre.ROLE_ADMIN);
-        if(rol.get()==null){
+       Rol find= rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get();
+        if(find==null){
             rolService.save(rolAdmin);
             rolService.save(rolUser);
         }
