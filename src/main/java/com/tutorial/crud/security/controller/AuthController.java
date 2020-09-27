@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -56,6 +57,13 @@ public class AuthController {
 
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
+        Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
+        Rol rolUser = new Rol(RolNombre.ROLE_USER);
+        Optional<Rol> rol=rolService.getByRolNombre(RolNombre.ROLE_ADMIN);
+        if(rol.get()==null){
+            rolService.save(rolAdmin);
+            rolService.save(rolUser);
+        }
         if(bindingResult.hasErrors())
             return new ResponseEntity(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
         if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
