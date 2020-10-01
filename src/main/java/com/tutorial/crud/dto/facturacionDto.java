@@ -3,6 +3,7 @@ package com.tutorial.crud.dto;
 import com.tutorial.crud.entity.Producto;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 
 public class facturacionDto {
@@ -13,19 +14,23 @@ public class facturacionDto {
 
     @NotBlank
     private Producto productoId;
+
     @Min(0)
     private int cantidad;
+
+    private String extras;
 
 
 
     public facturacionDto(){
     }
 
-    public facturacionDto(@NotBlank String usuarioId, @Min(0) int numeroFact, @NotBlank Producto productoId, @Min(0) int cantidad) {
+    public facturacionDto(@NotBlank String usuarioId, @Min(0) int numeroFact, @NotBlank Producto productoId, @Min(0) int cantidad,String extras) {
         this.usuarioId = usuarioId;
         this.numeroFact = numeroFact;
         this.productoId = productoId;
         this.cantidad = cantidad;
+        this.extras = extras;
     }
 
     public String getUsuarioId() {
@@ -58,5 +63,13 @@ public class facturacionDto {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getExtras() {
+        return extras;
+    }
+
+    public void setExtras(String extras) {
+        this.extras = extras;
     }
 }

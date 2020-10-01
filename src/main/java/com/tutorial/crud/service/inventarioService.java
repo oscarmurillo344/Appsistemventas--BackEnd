@@ -19,9 +19,7 @@ public class inventarioService {
 
     public List<inventario> listar(){ return inventariorepository.findAll(); }
 
-    public Optional<inventario> getOne(int id){
-        return inventariorepository.findById(id);
-    }
+    public Optional<inventario> getOne(int id){ return inventariorepository.findById(id); }
 
     public void  save(inventario inven){ inventariorepository.save(inven); }
 
@@ -34,6 +32,9 @@ public class inventarioService {
     }
 
     public inventario ActulizarProduct(Producto pid){ return inventariorepository.findByProductoId(pid);}
+
+
+
 
 
 }

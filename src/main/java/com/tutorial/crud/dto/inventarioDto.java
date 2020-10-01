@@ -5,14 +5,14 @@ import com.tutorial.crud.entity.Producto;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Calendar;
+import java.util.List;
 
 public class inventarioDto {
 
     @NotBlank
-    private Calendar fecha;
-
-    @NotBlank
     private Producto productoId;
+
+    private String extras;
 
     @Min(0)
     private int cantidad;
@@ -22,19 +22,11 @@ public class inventarioDto {
 
     public inventarioDto(){}
 
-    public inventarioDto(@NotBlank Calendar fecha, @NotBlank Producto productoId, @Min(0) int cantidad, @Min(0) int cantidadExist) {
-        this.fecha = fecha;
+    public inventarioDto(@NotBlank Producto productoId, @NotBlank String extras, @Min(0) int cantidad, @Min(0) int cantidadExist) {
         this.productoId = productoId;
+        this.extras = extras;
         this.cantidad = cantidad;
         this.cantidadExist = cantidadExist;
-    }
-
-    public Calendar getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Calendar fecha) {
-        this.fecha = fecha;
     }
 
     public Producto getProductoId() {
@@ -45,6 +37,14 @@ public class inventarioDto {
         this.productoId = productoId;
     }
 
+    public String getExtras() {
+        return extras;
+    }
+
+    public void setExtras(String extras) {
+        this.extras = extras;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
@@ -53,11 +53,11 @@ public class inventarioDto {
         this.cantidad = cantidad;
     }
 
-    public int getCantidadExiste() {
+    public int getCantidadExist() {
         return cantidadExist;
     }
 
-    public void setCantidadExiste(int cantidadExiste) {
-        this.cantidadExist = cantidadExiste;
+    public void setCantidadExist(int cantidadExist) {
+        this.cantidadExist = cantidadExist;
     }
 }

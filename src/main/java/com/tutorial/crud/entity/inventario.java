@@ -4,6 +4,7 @@ package com.tutorial.crud.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 public class inventario {
@@ -24,16 +25,18 @@ public class inventario {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Producto productoId;
 
+    private String extras;
+
     private int cantidad;
 
     private int cantidadExist;
 
     public inventario(){}
 
-    public inventario(@NotNull Calendar fecha, @NotNull Producto productoId, int cantidad, int cantidadExist) {
-        this.id = id;
+    public inventario(@NotNull Calendar fecha, Producto productoId, String extras, int cantidad, int cantidadExist) {
         this.fecha = fecha;
         this.productoId = productoId;
+        this.extras = extras;
         this.cantidad = cantidad;
         this.cantidadExist = cantidadExist;
     }
@@ -60,6 +63,14 @@ public class inventario {
 
     public void setProductoId(Producto productoId) {
         this.productoId = productoId;
+    }
+
+    public String getExtras() {
+        return extras;
+    }
+
+    public void setExtras(String extras) {
+        this.extras = extras;
     }
 
     public int getCantidad() {

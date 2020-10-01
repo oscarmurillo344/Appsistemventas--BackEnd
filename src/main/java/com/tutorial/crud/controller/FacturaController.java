@@ -36,17 +36,25 @@ public class FacturaController {
 
     @PostMapping("/facturar")
     public ResponseEntity<?> create(@RequestBody facturacionDto factDto){
-        int count=0;
+        int count=0,count2=0;
         if(factDto.getCantidad()<0)
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
 
         facturacion factura = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
                 , Calendar.getInstance(), factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(factura);
-        inventario inven=inventarioservice.ActulizarProduct(factDto.getProductoId() );
-             count=inven.getCantidadExist()- factDto.getCantidad();
-             inven.setCantidadExist(count);
-             inventarioservice.save(inven);
+        inventario inventar=inventarioservice.ActulizarProduct(factDto.getProductoId());
+        count=inventar.getCantidadExist()- factDto.getCantidad();
+        inventar.setCantidadExist(count);
+        inventarioservice.save(inventar);
+        String[] lista=factDto.getExtras().split(",");
+
+        for (int i=0;i < lista.length ;i++){
+            inventario inven=inventarioservice.getOne(Integer.parseInt(lista[i])).get();
+            count2=inven.getCantidadExist()- factDto.getCantidad();
+            inven.setCantidadExist(count2);
+            inventarioservice.save(inven);
+        }
         return new ResponseEntity(new Mensaje("Venta Exitosa"), HttpStatus.OK);
     }
 
