@@ -47,13 +47,15 @@ public class FacturaController {
         count=inventar.getCantidadExist()- factDto.getCantidad();
         inventar.setCantidadExist(count);
         inventarioservice.save(inventar);
-        String[] lista=factDto.getExtras().split(",");
 
-        for (int i=0;i < lista.length ;i++){
-            inventario inven=inventarioservice.getOne(Integer.parseInt(lista[i])).get();
-            count2=inven.getCantidadExist()- factDto.getCantidad();
-            inven.setCantidadExist(count2);
-            inventarioservice.save(inven);
+        if(factDto.getExtras()!= null){
+            String[] lista=factDto.getExtras().split(",");
+            for (int i=0;i < lista.length ;i++){
+                inventario inven=inventarioservice.getOne(Integer.parseInt(lista[i])).get();
+                count2=inven.getCantidadExist()- factDto.getCantidad();
+                inven.setCantidadExist(count2);
+                inventarioservice.save(inven);
+            }
         }
         return new ResponseEntity(new Mensaje("Venta Exitosa"), HttpStatus.OK);
     }
