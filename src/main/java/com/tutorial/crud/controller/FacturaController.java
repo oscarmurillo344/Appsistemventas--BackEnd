@@ -28,10 +28,21 @@ public class FacturaController {
     inventarioService inventarioservice;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/lista")
-    public ResponseEntity<List<facturacion>> list(){
-        List<facturacion> list = facturaservice.list();
+    @GetMapping("/lista/{numero}")
+    public ResponseEntity<List<facturacion>> list(@PathVariable("numero") int numero){
+        if (!facturaservice.existsByNumero(numero))
+            return new ResponseEntity(new Mensaje("transacción no existente"), HttpStatus.OK);
+        List<facturacion> list = facturaservice.listaNumero(numero);
         return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id")int id){
+        if(!facturaservice.existsByNumero(id))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        facturaservice.eliminarFact(id);
+        return new ResponseEntity(new Mensaje("factura eliminada"), HttpStatus.OK);
     }
 
     @PostMapping("/facturar")
@@ -57,6 +68,8 @@ public class FacturaController {
                 inventarioservice.save(inven);
             }
         }
+
+
         return new ResponseEntity(new Mensaje("Venta Exitosa"), HttpStatus.OK);
     }
 

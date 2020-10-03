@@ -28,6 +28,10 @@ public class FacturaService {
         return facturarepository.existsById(id);
     }
 
+    public boolean existsByNumero(int id){
+        return facturarepository.existsByNumeroFact(id);
+    }
+
     public List<facturacion> list(){
         return facturarepository.findAll();
     }
@@ -42,5 +46,9 @@ public class FacturaService {
 
     public List<VentasDay> TotalFechas(String usua, Date dateF, Date dateS)
     { return facturarepository.TotalFechas(usua,dateF,dateS);}
+
+    public List<facturacion> listaNumero(int id){return facturarepository.findByNumeroFact(id);}
+
+    public long eliminarFact(int numero){return facturarepository.deleteByNumeroFact(numero);}
 
 }

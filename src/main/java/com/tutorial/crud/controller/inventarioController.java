@@ -82,6 +82,8 @@ public class inventarioController {
         return new ResponseEntity(new Mensaje("producto e inventario eliminado"), HttpStatus.OK);
     }
 
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updatepollo/{id}")
     public ResponseEntity<?> updatepollo(@PathVariable("id")int id,

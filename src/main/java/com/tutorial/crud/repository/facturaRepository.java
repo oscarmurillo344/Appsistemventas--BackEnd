@@ -39,4 +39,10 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
                                 @Param("dateFirst") Date dateF,
                                 @Param("dateSecond") Date dateS);
 
+    List<facturacion> findByNumeroFact(int id);
+
+    boolean existsByNumeroFact(int id);
+
+    long deleteByNumeroFact(int id);
+
 }
