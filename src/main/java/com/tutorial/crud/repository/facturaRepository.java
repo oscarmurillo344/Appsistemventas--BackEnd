@@ -15,24 +15,24 @@ import java.util.List;
 public interface facturaRepository extends JpaRepository<facturacion, Integer> {
 
     @Query(value = "SELECT case" +
-            "     when max(numero_fact) is null then 1" +
-            "     else max(numero_fact)" +
+            "     when MAX(numero_fact) is null then 0" +
+            "     else MAX(numero_fact)" +
             "      end as valor" +
-            "     FROM appasadero.facturacion", nativeQuery = true)
+            "     FROM facturacion", nativeQuery = true)
     Integer FacturaMaxima();
 
     @Query(value = "SELECT f.usuario,pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
-            "FROM appasadero.facturacion f, appasadero.rel_fact_product pf,appasadero.producto pr " +
+            "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user " +
-            " and day(f.registro_date)=day(now()) " +
+            " and extract(day from f.registro_date)=extract(day from current_date) " +
             " group by f.usuario,pr.nombre,pr.precio " +
             " order by pr.nombre;", nativeQuery = true)
     List<VentasDay> TotalDay(@Param("user") String usuario);
 
     @Query(value = "SELECT f.usuario,pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
-            "FROM appasadero.facturacion f, appasadero.rel_fact_product pf,appasadero.producto pr " +
+            "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user and " +
-            " date(f.registro_date) between date(:dateFirst) and date(:dateSecond) " +
+            " CAST(f.registro_date AS date) between CAST( :dateFirst AS date) and CAST( :dateSecond AS date) " +
             " group by f.usuario,pr.nombre,pr.precio " +
             " order by pr.nombre;",nativeQuery = true)
     List<VentasDay> TotalFechas(@Param("user") String usuario,

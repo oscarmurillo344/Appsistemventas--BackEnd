@@ -14,23 +14,23 @@ public interface gastosRepository extends JpaRepository<gastos, Integer> {
 
     List<gastos> findByTipo(String tipo);
 
-    @Query(value = "SELECT * FROM appasadero.gastos " +
+    @Query(value = "SELECT * FROM gastos " +
             "where tipo= :tipo and usuario= :user " +
-            " and Date(fecha) between Date(:desde) and Date(:hasta)",nativeQuery = true)
+            " and CAST(fecha AS date) between CAST( :desde AS date) and CAST( :hasta AS date)",nativeQuery = true)
     List<gastos>BuscarxFechaxUserxTipo(@Param("desde") Calendar since,
                                        @Param("hasta")Calendar until,
                                        @Param("user")String usuario,
                                        @Param("tipo")String type);
 
-    @Query(value = "SELECT * FROM appasadero.gastos " +
+    @Query(value = "SELECT * FROM gastos " +
             "where usuario= :user" +
-            " and Date(fecha) between Date(:desde) and Date(:hasta)",nativeQuery = true)
+            " and CAST(fecha AS date) between CAST( :desde AS date) and CAST( :hasta AS date)",nativeQuery = true)
     List<gastos>BuscarxFechaxUser(@Param("desde") Calendar since,
                                   @Param("hasta")Calendar until,
                                   @Param("user")String usuario);
 
-    @Query(value = "SELECT * FROM appasadero.gastos " +
-            "where Date(fecha) between Date(:desde) and Date(:hasta)",nativeQuery = true)
+    @Query(value = "SELECT * FROM gastos " +
+            "where CAST(fecha AS date) between CAST( :desde AS date) and CAST( :hasta AS date)",nativeQuery = true)
     List<gastos>BuscarxFecha(@Param("desde") Calendar since,
                              @Param("hasta")Calendar until);
 
