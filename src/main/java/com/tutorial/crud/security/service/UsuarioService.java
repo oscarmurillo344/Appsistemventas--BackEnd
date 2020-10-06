@@ -31,6 +31,11 @@ public class UsuarioService {
     public void save(Usuario usuario){
         usuarioRepository.save(usuario);
     }
+
+    public boolean existeUser(int id){return usuarioRepository.existsById(id);}
+
+    public void eliminarUser(int id){usuarioRepository.deleteById(id);}
+
     public List<Usuario> listar(){
         return usuarioRepository.findAll();
     }

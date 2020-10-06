@@ -14,6 +14,7 @@ import com.tutorial.crud.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,12 +50,14 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/listaUsu")
     public ResponseEntity<List<Usuario>> list(){
         List<Usuario> list = usuarioService.listar();
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -86,5 +89,14 @@ public class AuthController {
         UserDetails userDetails = (UserDetails)authentication.getPrincipal();
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         return new ResponseEntity(jwtDto, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/deleteuser/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id")int id){
+        if(!usuarioService.existeUser(id))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        usuarioService.eliminarUser(id);
+        return new ResponseEntity(new Mensaje("Usuario eliminado"), HttpStatus.OK);
     }
 }
