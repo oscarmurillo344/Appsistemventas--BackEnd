@@ -40,7 +40,7 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
                                 @Param("dateSecond") Date dateS);
 
     @Query(value = "SELECT pr.nombre,pr.precio,CAST(f.registro_date AS date)," +
-            " DATEPART(hh,f.registro_date)+':'+ DATEPART(mi,f.registro_date)+':'+DATEPART(ss,f.registro_date)," +
+            " to_char(f.registro_date, 'HH24:MI:SS')," +
             "sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and" +
