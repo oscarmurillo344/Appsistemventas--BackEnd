@@ -9,7 +9,13 @@ public interface VentasDay {
 
     float getPrecio();
 
+    String getFecha();
+
+    String getHora();
+
     int getCantidad();
+
+
 
 
 
