@@ -44,8 +44,11 @@ public class FacturaService {
 
     public List<VentasDay> TotalDia(String usuario){ return facturarepository.TotalDay(usuario);}
 
-    public List<VentasDay> TotalFechas(String usua, Date dateF, Date dateS)
+    public List<VentasDay> TotalFechasUser(String usua, Date dateF, Date dateS)
     { return facturarepository.TotalFechas(usua,dateF,dateS);}
+
+    public List<VentasDay> TotalFechas(Date dateF, Date dateS)
+    { return facturarepository.TotalFechas(dateF,dateS);}
 
     public List<facturacion> listaNumero(int id){return facturarepository.findByNumeroFact(id);}
 

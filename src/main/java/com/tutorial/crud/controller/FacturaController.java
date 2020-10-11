@@ -85,14 +85,24 @@ public class FacturaController {
         return new ResponseEntity(l, HttpStatus.OK);
     }
 
-    @PostMapping("/totalfecha")
-    public ResponseEntity<List<VentasDay>> totalFecha(@RequestBody BetweenFechas fec){
+    @PostMapping("/totalfechaUser")
+    public ResponseEntity<List<VentasDay>> totalFechaUser(@RequestBody BetweenFechas fec){
         if(fec.getFechaFirst() == null )
             return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
         if(fec.getUsuario().isEmpty())
             return new ResponseEntity(new Mensaje("No existe usuario"),HttpStatus.BAD_REQUEST);
 
-        List<VentasDay> listar=facturaservice.TotalFechas(fec.getUsuario(),fec.getFechaFirst(),fec.getFechaSecond());
+        List<VentasDay> listar=facturaservice.TotalFechasUser(fec.getUsuario(),fec.getFechaFirst(),fec.getFechaSecond());
+        return new ResponseEntity(listar,HttpStatus.OK);
+    }
+
+    @PostMapping("/totalfecha")
+    public ResponseEntity<List<VentasDay>> totalFecha(@RequestBody BetweenFechas fec)
+    {
+        if(fec.getFechaFirst() == null )
+            return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
+
+        List<VentasDay> listar=facturaservice.TotalFechas(fec.getFechaFirst(),fec.getFechaSecond());
         return new ResponseEntity(listar,HttpStatus.OK);
     }
 
