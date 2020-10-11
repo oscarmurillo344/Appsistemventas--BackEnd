@@ -45,7 +45,7 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and" +
             " CAST(f.registro_date AS date) between CAST( :dateFirst AS date) and CAST( :dateSecond AS date) " +
-            " group by pr.nombre,pr.precio " +
+            " group by pr.nombre,pr.precio,f.registro_date " +
             " order by pr.nombre;",nativeQuery = true)
     List<VentasDay> TotalFechas(@Param("dateFirst") Date dateF,
                                 @Param("dateSecond") Date dateS);
