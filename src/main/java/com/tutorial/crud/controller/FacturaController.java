@@ -50,10 +50,11 @@ public class FacturaController {
         int count=0,count2=0;
         if(factDto.getCantidad()<0)
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
+        System.out.println("Error: "+factDto.getFecha());
 
-        facturacion factura = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
+        facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
                 , factDto.getFecha(), factDto.getProductoId(),factDto.getCantidad());
-        facturaservice.save(factura);
+        facturaservice.save(fact);
         inventario inventar=inventarioservice.ActulizarProduct(factDto.getProductoId());
         count=inventar.getCantidadExist()- factDto.getCantidad();
         inventar.setCantidadExist(count);
