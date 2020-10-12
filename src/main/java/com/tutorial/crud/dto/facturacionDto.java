@@ -3,6 +3,7 @@ package com.tutorial.crud.dto;
 import com.tutorial.crud.entity.Producto;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,6 +12,8 @@ public class facturacionDto {
     private String usuarioId;
     @Min(0)
     private int numeroFact;
+
+    private Date fecha;
 
     @NotBlank
     private Producto productoId;
@@ -21,6 +24,13 @@ public class facturacionDto {
     private String extras;
 
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
     public facturacionDto(){
     }

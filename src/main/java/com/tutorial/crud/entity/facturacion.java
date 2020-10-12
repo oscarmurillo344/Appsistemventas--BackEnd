@@ -4,8 +4,6 @@ import com.tutorial.crud.security.entity.Usuario;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Time;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -20,7 +18,7 @@ public class facturacion {
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar registroDate;
+    private Date registroDate;
 
     @NotNull
     @JoinTable(
@@ -37,7 +35,7 @@ public class facturacion {
     public facturacion(){
     }
 
-    public facturacion(int numeroFact, @NotNull String usuario, @NotNull Calendar registroDate, @NotNull Producto productoId, int cantidad) {
+    public facturacion(int numeroFact, @NotNull String usuario, @NotNull Date registroDate, @NotNull Producto productoId, int cantidad) {
         this.id = id;
         this.numeroFact = numeroFact;
         this.usuario = usuario;
@@ -70,11 +68,11 @@ public class facturacion {
         this.usuario = usuario;
     }
 
-    public Calendar getRegistroDate() {
+    public Date getRegistroDate() {
         return registroDate;
     }
 
-    public void setRegistroDate(Calendar registroDate) {
+    public void setRegistroDate(Date registroDate) {
         this.registroDate = registroDate;
     }
 
