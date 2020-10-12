@@ -13,7 +13,7 @@ public class facturacionDto {
     @Min(0)
     private int numeroFact;
 
-    private Date fecha;
+    private Date registroDate;
 
     @NotBlank
     private Producto productoId;
@@ -25,11 +25,11 @@ public class facturacionDto {
 
 
     public Date getFecha() {
-        return fecha;
+        return registroDate;
     }
 
     public void setFecha(Date fecha) {
-        this.fecha = fecha;
+        this.registroDate = fecha;
     }
 
     public facturacionDto(){
