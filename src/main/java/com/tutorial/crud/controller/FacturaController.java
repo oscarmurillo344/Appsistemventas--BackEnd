@@ -57,7 +57,6 @@ public class FacturaController {
         inventario inventar=inventarioservice.ActulizarProduct(factDto.getProductoId());
         count=inventar.getCantidadExist()- factDto.getCantidad();
         inventar.setCantidadExist(count);
-        inventarioservice.save(inventar);
 
         if(factDto.getExtras()!= null){
             String[] lista=factDto.getExtras().split(",");
