@@ -65,10 +65,6 @@ public class AuthController {
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
             return new ResponseEntity(new Mensaje("ese email ya existe"), HttpStatus.BAD_REQUEST);
-        Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
-        Rol rolUser = new Rol(RolNombre.ROLE_USER);
-        rolService.save(rolAdmin);
-        rolService.save(rolUser);
         Usuario usuario =
                 new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
                         passwordEncoder.encode(nuevoUsuario.getPassword()));
