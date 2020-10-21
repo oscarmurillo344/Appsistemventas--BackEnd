@@ -13,12 +13,17 @@ public class facturacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int numeroFact;
+
     @NotNull
     private String usuario;
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date registroDate;
+
+    @NotNull
+    @Temporal(TemporalType.TIME)
+    private Date registroTime;
 
     @NotNull
     @JoinTable(
@@ -35,11 +40,11 @@ public class facturacion {
     public facturacion(){
     }
 
-    public facturacion(int numeroFact, @NotNull String usuario, @NotNull Date registroDate, @NotNull Producto productoId, int cantidad) {
-        this.id = id;
+    public facturacion(int numeroFact, @NotNull String usuario, @NotNull Date registroDate, @NotNull Date registroTime, @NotNull Producto productoId, int cantidad) {
         this.numeroFact = numeroFact;
         this.usuario = usuario;
         this.registroDate = registroDate;
+        this.registroTime = registroTime;
         this.productoId = productoId;
         this.cantidad = cantidad;
     }
@@ -74,6 +79,14 @@ public class facturacion {
 
     public void setRegistroDate(Date registroDate) {
         this.registroDate = registroDate;
+    }
+
+    public Date getRegistroTime() {
+        return registroTime;
+    }
+
+    public void setRegistroTime(Date registroTime) {
+        this.registroTime = registroTime;
     }
 
     public Producto getProductoId() {

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
     @Query(value = "SELECT f.usuario,pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user " +
-            " and extract(day from f.registro_date)=extract(day from current_date) " +
+            " and f.registro_date=extract(day from current_date) " +
             " group by f.usuario,pr.nombre,pr.precio " +
             " order by pr.nombre;", nativeQuery = true)
     List<VentasDay> TotalDay(@Param("user") String usuario);
@@ -32,18 +31,18 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
     @Query(value = "SELECT f.usuario,pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user and " +
-            " CAST(f.registro_date AS date) between CAST( :dateFirst AS date) and CAST( :dateSecond AS date) " +
+            "f.registro_date between :dateFirst and :dateSecond " +
             " group by f.usuario,pr.nombre,pr.precio " +
             " order by pr.nombre;",nativeQuery = true)
     List<VentasDay> TotalFechas(@Param("user") String usuario,
                                 @Param("dateFirst") Date dateF,
                                 @Param("dateSecond") Date dateS);
 
-    @Query(value = "SELECT pr.nombre,pr.precio,f.registro_date as fecha,CAST(f.registro_date as time ) as hora," +
+    @Query(value = "SELECT pr.nombre,pr.precio,f.registro_date as fecha, registro_time as hora," +
             "sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and" +
-            " CAST(f.registro_date AS date) between CAST( :dateFirst AS date) and CAST( :dateSecond AS date) " +
+            " f.registro_date between :dateFirst and  :dateSecond " +
             " group by pr.nombre,pr.precio,f.registro_date " +
             " order by pr.nombre;",nativeQuery = true)
     List<VentasDay> TotalFechas(@Param("dateFirst") Date dateF,

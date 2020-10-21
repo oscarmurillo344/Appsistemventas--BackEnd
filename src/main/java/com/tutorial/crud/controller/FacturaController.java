@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +56,7 @@ public class FacturaController {
         System.out.println("Error: "+factDto.getFecha());
 
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
-                , new Date(), factDto.getProductoId(),factDto.getCantidad());
+                , new Date(),new Date(),factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(fact);
         inventario inventar=inventarioservice.ActulizarProduct(factDto.getProductoId());
         count=inventar.getCantidadExist()- factDto.getCantidad();
