@@ -57,11 +57,13 @@ public class FacturaController {
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
                 , new Date(),new Date(),factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(fact);
+
         inventario inventory=inventarioservice.ActulizarProduct(factDto.getProductoId());
         count=inventory.getCantidadExist()- factDto.getCantidad();
         inventory.setCantidadExist(count);
+        inventarioservice.save(inventory);
 
-        if(factDto.getExtras()!= ""){
+        if(factDto.getExtras() != ""){
             String[] lista=factDto.getExtras().split(",");
             for (int i=0;i < lista.length ;i++){
                 inventario invent=inventarioservice.getOne(Integer.parseInt(lista[i])).get();
