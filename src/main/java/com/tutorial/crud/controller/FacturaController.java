@@ -53,22 +53,21 @@ public class FacturaController {
         int count=0,count2=0;
         if(factDto.getCantidad()<0)
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
-        System.out.println("Error: "+factDto.getFecha());
 
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
                 , new Date(),new Date(),factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(fact);
-        inventario inventar=inventarioservice.ActulizarProduct(factDto.getProductoId());
-        count=inventar.getCantidadExist()- factDto.getCantidad();
-        inventar.setCantidadExist(count);
+        inventario inventory=inventarioservice.ActulizarProduct(factDto.getProductoId());
+        count=inventory.getCantidadExist()- factDto.getCantidad();
+        inventory.setCantidadExist(count);
 
         if(factDto.getExtras()!= null){
             String[] lista=factDto.getExtras().split(",");
             for (int i=0;i < lista.length ;i++){
-                inventario inven=inventarioservice.getOne(Integer.parseInt(lista[i])).get();
-                count2=inven.getCantidadExist()- factDto.getCantidad();
-                inven.setCantidadExist(count2);
-                inventarioservice.save(inven);
+                inventario invent=inventarioservice.getOne(Integer.parseInt(lista[i])).get();
+                count2=invent.getCantidadExist()- factDto.getCantidad();
+                invent.setCantidadExist(count2);
+                inventarioservice.save(invent);
             }
         }
 
