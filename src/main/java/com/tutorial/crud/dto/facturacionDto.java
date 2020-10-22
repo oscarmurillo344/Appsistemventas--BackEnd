@@ -13,7 +13,8 @@ public class facturacionDto {
     @Min(0)
     private int numeroFact;
 
-    private Date registroDate;
+    @NotBlank
+    private Date fechaactual;
 
     @NotBlank
     private Producto productoId;
@@ -24,14 +25,6 @@ public class facturacionDto {
     private String extras;
 
 
-    public Date getFecha() {
-        return registroDate;
-    }
-
-    public void setFecha(Date fecha) {
-        this.registroDate = fecha;
-    }
-
     public facturacionDto(){
     }
 
@@ -41,6 +34,14 @@ public class facturacionDto {
         this.productoId = productoId;
         this.cantidad = cantidad;
         this.extras = extras;
+    }
+
+    public Date getFecha() {
+        return fechaactual;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fechaactual = fecha;
     }
 
     public String getUsuarioId() {
