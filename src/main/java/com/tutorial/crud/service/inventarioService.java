@@ -4,7 +4,6 @@ import com.tutorial.crud.entity.Producto;
 import com.tutorial.crud.entity.inventario;
 import com.tutorial.crud.repository.inventarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
