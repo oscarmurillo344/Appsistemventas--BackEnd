@@ -1,9 +1,9 @@
 package com.tutorial.crud.controller;
 
 import com.tutorial.crud.dto.Mensaje;
-import com.tutorial.crud.dto.facturacionDto;
 import com.tutorial.crud.dto.BetweenFechas;
 import com.tutorial.crud.dto.VentasDay;
+import com.tutorial.crud.dto.facturaDto;
 import com.tutorial.crud.entity.facturacion;
 import com.tutorial.crud.entity.inventario;
 import com.tutorial.crud.service.FacturaService;
@@ -44,13 +44,13 @@ public class FacturaController {
     }
 
     @PostMapping("/facturar")
-    public ResponseEntity<?> create(@RequestBody facturacionDto factDto){
+    public ResponseEntity<?> create(@RequestBody facturaDto factDto){
         int count=0,count2=0;
         if(factDto.getCantidad()<0)
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
 
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
-                , factDto.getFecha(),factDto.getFecha(),factDto.getProductoId(),factDto.getCantidad());
+                , factDto.getDatenow(),factDto.getDatenow(),factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(fact);
 
         inventario inventory=inventarioservice.ActulizarProduct(factDto.getProductoId());

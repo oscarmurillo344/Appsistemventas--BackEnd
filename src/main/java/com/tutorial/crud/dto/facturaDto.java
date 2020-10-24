@@ -1,20 +1,20 @@
 package com.tutorial.crud.dto;
 
 import com.tutorial.crud.entity.Producto;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.List;
 
+public class facturaDto {
 
-public class facturacionDto {
     @NotBlank
     private String usuarioId;
     @Min(0)
     private int numeroFact;
 
     @NotBlank
-    private Date fechaactual;
+    private Date datenow;
 
     @NotBlank
     private Producto productoId;
@@ -24,24 +24,17 @@ public class facturacionDto {
 
     private String extras;
 
+ public facturaDto(){
 
-    public facturacionDto(){
-    }
+ }
 
-    public facturacionDto(@NotBlank String usuarioId, @Min(0) int numeroFact, @NotBlank Producto productoId, @Min(0) int cantidad,String extras) {
+    public facturaDto(@NotBlank String usuarioId, @Min(0) int numeroFact, @NotBlank Date datenow, @NotBlank Producto productoId, @Min(0) int cantidad, String extras) {
         this.usuarioId = usuarioId;
         this.numeroFact = numeroFact;
+        this.datenow = datenow;
         this.productoId = productoId;
         this.cantidad = cantidad;
         this.extras = extras;
-    }
-
-    public Date getFecha() {
-        return fechaactual;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fechaactual = fecha;
     }
 
     public String getUsuarioId() {
@@ -58,6 +51,14 @@ public class facturacionDto {
 
     public void setNumeroFact(int numeroFact) {
         this.numeroFact = numeroFact;
+    }
+
+    public Date getDatenow() {
+        return datenow;
+    }
+
+    public void setDatenow(Date datenow) {
+        this.datenow = datenow;
     }
 
     public Producto getProductoId() {
