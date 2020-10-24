@@ -19,7 +19,7 @@ public class facturacion {
 
     @NotNull
     @Temporal(TemporalType.DATE)
-    private Date fechaactual;
+    private Date datenow;
 
     @NotNull
     @Temporal(TemporalType.TIME)
@@ -43,7 +43,7 @@ public class facturacion {
     public facturacion(int numeroFact, @NotNull String usuario, @NotNull Date fechaactual, @NotNull Date tiempoactual, @NotNull Producto productoId, int cantidad) {
         this.numeroFact = numeroFact;
         this.usuario = usuario;
-        this.fechaactual = fechaactual;
+        this.datenow = fechaactual;
         this.tiempoactual = tiempoactual;
         this.productoId = productoId;
         this.cantidad = cantidad;
@@ -74,11 +74,11 @@ public class facturacion {
     }
 
     public Date getFechaactual() {
-        return fechaactual;
+        return datenow;
     }
 
     public void setFechaactual(Date fechaactual) {
-        this.fechaactual = fechaactual;
+        this.datenow = fechaactual;
     }
 
     public Date getTiempoactual() {
