@@ -40,10 +40,10 @@ public class facturacion {
     public facturacion(){
     }
 
-    public facturacion(int numeroFact, @NotNull String usuario, @NotNull Date fechaactual, @NotNull Date tiempoactual, @NotNull Producto productoId, int cantidad) {
+    public facturacion(int numeroFact, @NotNull String usuario, @NotNull Date datenow, @NotNull Date tiempoactual, @NotNull Producto productoId, int cantidad) {
         this.numeroFact = numeroFact;
         this.usuario = usuario;
-        this.datenow = fechaactual;
+        this.datenow = datenow;
         this.tiempoactual = tiempoactual;
         this.productoId = productoId;
         this.cantidad = cantidad;
