@@ -19,11 +19,11 @@ public class facturacion {
 
     @NotNull
     @Temporal(TemporalType.DATE)
-    private Date RegistroDate;
+    private Date datenow;
 
     @NotNull
     @Temporal(TemporalType.TIME)
-    private Date RegistroTime;
+    private Date tiempoactual;
 
     @NotNull
     @JoinTable(
@@ -43,8 +43,8 @@ public class facturacion {
     public facturacion(int numeroFact, @NotNull String usuario, @NotNull Date datenow, @NotNull Date tiempoactual, @NotNull Producto productoId, int cantidad) {
         this.numeroFact = numeroFact;
         this.usuario = usuario;
-        this.RegistroDate = datenow;
-        this.RegistroTime = tiempoactual;
+        this.datenow = datenow;
+        this.tiempoactual = tiempoactual;
         this.productoId = productoId;
         this.cantidad = cantidad;
     }
@@ -74,19 +74,19 @@ public class facturacion {
     }
 
     public Date getFechaactual() {
-        return RegistroDate;
+        return datenow;
     }
 
     public void setFechaactual(Date fechaactual) {
-        this.RegistroDate = fechaactual;
+        this.datenow = fechaactual;
     }
 
     public Date getTiempoactual() {
-        return RegistroTime;
+        return tiempoactual;
     }
 
     public void setTiempoactual(Date tiempoactual) {
-        this.RegistroTime = tiempoactual;
+        this.tiempoactual = tiempoactual;
     }
 
     public Producto getProductoId() {

@@ -14,7 +14,7 @@ public class facturaDto {
     private int numeroFact;
 
     @NotBlank
-    private Date RegistroDate;
+    private Date datenow;
 
     @NotBlank
     private Producto productoId;
@@ -31,7 +31,7 @@ public class facturaDto {
     public facturaDto(@NotBlank String usuarioId, @Min(0) int numeroFact, @NotBlank Date datenow, @NotBlank Producto productoId, @Min(0) int cantidad, String extras) {
         this.usuarioId = usuarioId;
         this.numeroFact = numeroFact;
-        this.RegistroDate = datenow;
+        this.datenow = datenow;
         this.productoId = productoId;
         this.cantidad = cantidad;
         this.extras = extras;
@@ -54,11 +54,11 @@ public class facturaDto {
     }
 
     public Date getDatenow() {
-        return RegistroDate;
+        return datenow;
     }
 
     public void setDatenow(Date datenow) {
-        this.RegistroDate = datenow;
+        this.datenow = datenow;
     }
 
     public Producto getProductoId() {
