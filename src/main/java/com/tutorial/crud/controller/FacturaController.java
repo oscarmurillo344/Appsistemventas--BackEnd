@@ -13,7 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/factura")
@@ -48,11 +51,11 @@ public class FacturaController {
         int count=0,count2=0;
         if(factDto.getCantidad()<0)
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
-
-        System.out.println("fecha entrada: "+factDto.getDatenow());
+        TimeZone tz = TimeZone.getTimeZone("GMT-05:00");
+        Calendar c = Calendar.getInstance(tz);
+        System.out.println("fecha entrada: "+c);
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
                 , factDto.getDatenow(),factDto.getDatenow(),factDto.getProductoId(),factDto.getCantidad());
-        System.out.println("factura: "+fact.getFechaactual()+" "+fact.getTiempoactual());
         facturaservice.save(fact);
 
         inventario inventory=inventarioservice.ActulizarProduct(factDto.getProductoId());
