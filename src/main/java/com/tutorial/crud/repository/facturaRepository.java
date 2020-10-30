@@ -23,7 +23,7 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
     @Query(value = "SELECT f.usuario,pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user " +
-            " and f.fechaactual=extract(day from current_date) " +
+            " and f.Date_now=extract(day from current_date) " +
             " group by f.usuario,pr.nombre,pr.precio " +
             " order by pr.nombre;", nativeQuery = true)
     List<VentasDay> TotalDay(@Param("user") String usuario);
@@ -31,19 +31,18 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
     @Query(value = "SELECT f.usuario,pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user and " +
-            "f.fechaactual between :dateFirst and :dateSecond " +
+            "f.Date_now between :dateFirst and :dateSecond " +
             " group by f.usuario,pr.nombre,pr.precio " +
             " order by pr.nombre;",nativeQuery = true)
     List<VentasDay> TotalFechas(@Param("user") String usuario,
                                 @Param("dateFirst") Date dateF,
                                 @Param("dateSecond") Date dateS);
 
-    @Query(value = "SELECT pr.nombre,pr.precio,f.fechaactual as fecha, tiempoactual as hora," +
-            "sum(f.cantidad) as cantidad " +
+    @Query(value = "SELECT pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
             " where pf.fk_product=pr.id and pf.fk_fact=f.id and" +
-            " f.fechaactual between :dateFirst and  :dateSecond " +
-            " group by pr.nombre,pr.precio,f.registro_date " +
+            " f.Date_now between :dateFirst and  :dateSecond " +
+            " group by pr.nombre,pr.precio" +
             " order by pr.nombre;",nativeQuery = true)
     List<VentasDay> TotalFechas(@Param("dateFirst") Date dateF,
                                 @Param("dateSecond") Date dateS);

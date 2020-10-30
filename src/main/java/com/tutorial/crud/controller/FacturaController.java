@@ -49,8 +49,10 @@ public class FacturaController {
         if(factDto.getCantidad()<0)
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
 
+        System.out.println("fecha entrada: "+factDto.getDatenow());
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
                 , factDto.getDatenow(),factDto.getDatenow(),factDto.getProductoId(),factDto.getCantidad());
+        System.out.println("factura: "+fact.getFechaactual()+" "+fact.getTiempoactual());
         facturaservice.save(fact);
 
         inventario inventory=inventarioservice.ActulizarProduct(factDto.getProductoId());
@@ -72,18 +74,21 @@ public class FacturaController {
         return new ResponseEntity(new Mensaje("Venta Exitosa"), HttpStatus.OK);
     }
 
+
     @GetMapping("/numero")
     public ResponseEntity<Integer> Numerofactura(){
         Integer listaN=facturaservice.MaximoValor();
         return new ResponseEntity(listaN, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/totalDay/{usu}")
     public ResponseEntity<List<VentasDay>> Totalday(@PathVariable("usu") String usu){
         List<VentasDay> l=facturaservice.TotalDia(usu);
         return new ResponseEntity(l, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/totalfechaUser")
     public ResponseEntity<List<VentasDay>> totalFechaUser(@RequestBody BetweenFechas fec){
         if(fec.getFechaFirst() == null )
@@ -95,6 +100,7 @@ public class FacturaController {
         return new ResponseEntity(listar,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/totalfecha")
     public ResponseEntity<List<VentasDay>> totalFecha(@RequestBody BetweenFechas fec)
     {
