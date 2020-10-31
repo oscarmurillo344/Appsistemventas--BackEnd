@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -50,17 +49,12 @@ public class FacturaController {
     @PostMapping("/facturar")
     public ResponseEntity<?> create(@RequestBody facturaDto factDto){
         int count=0,count2=0;
+
         if(factDto.getCantidad()<0)
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
-        TimeZone tz = TimeZone.getTimeZone("GMT-05:00");
-        Calendar c = Calendar.getInstance(tz);
-        String time = String.format("%02d" , c.get(Calendar.HOUR_OF_DAY))+":"+
-                String.format("%02d" , c.get(Calendar.MINUTE))+":"+
-        String.format("%02d" , c.get(Calendar.SECOND))+":"+
-        String.format("%03d" , c.get(Calendar.MILLISECOND));
-        System.out.println("fecha entrada: "+time);
+
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
-                , factDto.getDatenow(),Date.valueOf(time),factDto.getProductoId(),factDto.getCantidad());
+                , factDto.getDatenow(),facturaservice.convertir(),factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(fact);
 
         inventario inventory=inventarioservice.ActulizarProduct(factDto.getProductoId());
