@@ -71,6 +71,7 @@ public class gastosController {
         @PreAuthorize("hasRole('ADMIN')")
         @PostMapping("/listaUserFecha/")
         public ResponseEntity<List<gastos>> listarUserFecha(@RequestBody gastosX gasto){
+            System.out.println(gasto.getInicial()+" "+gasto.getFin()+" "+gasto.getUsuario());
             List<gastos> list = gastosSer.ListarxFechaxUser
                     (gasto.getInicial(),gasto.getFin(),gasto.getUsuario());
             return new ResponseEntity(list, HttpStatus.OK);
@@ -79,6 +80,7 @@ public class gastosController {
         @PreAuthorize("hasRole('ADMIN')")
         @PostMapping("/listaFecha/")
         public ResponseEntity<List<gastos>> listarFecha(@RequestBody gastosX gasto){
+            System.out.println(gasto.getInicial()+" "+gasto.getFin()+" "+gasto.getUsuario());
             List<gastos> list = gastosSer.ListarxFecha
                     (gasto.getInicial(),gasto.getFin());
             return new ResponseEntity(list, HttpStatus.OK);
