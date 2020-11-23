@@ -12,7 +12,11 @@ import java.util.List;
 @Repository
 public interface gastosRepository extends JpaRepository<gastos, Integer> {
 
-    List<gastos> findByTipo(String tipo);
+    @Query(value = "SELECT * FROM gastos " +
+            "where tipo= :tipo and CAST(fecha AS date) between CAST( :desde AS date) and CAST( :hasta AS date)",nativeQuery = true)
+    List<gastos>BuscarxFechaxTipo(@Param("desde") Calendar since,
+                                  @Param("hasta")Calendar until,
+                                  @Param("tipo")String type);
 
     @Query(value = "SELECT * FROM gastos " +
             "where tipo= :tipo and usuario= :user " +
