@@ -54,7 +54,7 @@ public class gastosController {
         }
 
         @PreAuthorize("hasRole('ADMIN')")
-        @GetMapping("/listaTipo/")
+        @PostMapping("/listaTipo/")
         public ResponseEntity<List<gastos>> listarTipo(@RequestBody gastosX gasto){
             List<gastos> list = gastosSer.ListarTipo(gasto.getInicial(),gasto.getFin(),gasto.getTipo());
             return new ResponseEntity(list, HttpStatus.OK);
