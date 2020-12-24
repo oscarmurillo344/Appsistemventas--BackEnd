@@ -6,15 +6,17 @@ import java.sql.Date;
 public class BetweenFechas {
 
     String usuario;
-    Date tiempo;
+    String tiempoF;
+    String tiempoS;
     Date fechaFirst;
     Date fechaSecond;
 
     public BetweenFechas(){}
 
-    public BetweenFechas(String usuario, Date tiempo, Date fechaFirst, Date fechaSecond) {
+    public BetweenFechas(String usuario, String tiempoF, String tiempoS, Date fechaFirst, Date fechaSecond) {
         this.usuario = usuario;
-        this.tiempo = tiempo;
+        this.tiempoF = tiempoF;
+        this.tiempoS = tiempoS;
         this.fechaFirst = fechaFirst;
         this.fechaSecond = fechaSecond;
     }
@@ -27,12 +29,20 @@ public class BetweenFechas {
         this.usuario = usuario;
     }
 
-    public Date getTiempo() {
-        return tiempo;
+    public String getTiempoF() {
+        return tiempoF;
     }
 
-    public void setTiempo(Date tiempo) {
-        this.tiempo = tiempo;
+    public void setTiempoF(String tiempoF) {
+        this.tiempoF = tiempoF;
+    }
+
+    public String getTiempoS() {
+        return tiempoS;
+    }
+
+    public void setTiempoS(String tiempoS) {
+        this.tiempoS = tiempoS;
     }
 
     public Date getFechaFirst() {

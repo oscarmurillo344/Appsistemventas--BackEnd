@@ -49,12 +49,13 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
 
     @Query(value = "SELECT f.usuario,pr.nombre,pr.precio,sum(f.cantidad) as cantidad " +
             "FROM facturacion f, rel_fact_product pf, producto pr " +
-            " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user and f.tiempoactual= :time and " +
+            " where pf.fk_product=pr.id and pf.fk_fact=f.id and f.usuario= :user and f.tiempoactual between :timeF and :timeS and" +
             "f.Datenow between :dateFirst and :dateSecond " +
             " group by f.usuario,pr.nombre,pr.precio " +
             " order by pr.nombre;",nativeQuery = true)
     List<VentasDay> TotalFechasHoras(@Param("user") String usuario,
-                                     @Param("time") Date tiempo,
+                                     @Param("timeF") String tiempoF,
+                                    @Param("timeS") String tiempoS,
                                     @Param("dateFirst") Date dateF,
                                     @Param("dateSecond") Date dateS);
 
