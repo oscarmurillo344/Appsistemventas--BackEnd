@@ -87,7 +87,7 @@ public class AuthController {
         String jwt = jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails)authentication.getPrincipal();
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
-        rolService.delete(2);rolService.delete(3);
+        rolService.delete(3);rolService.delete(4);
         return new ResponseEntity(jwtDto, HttpStatus.OK);
     }
 
