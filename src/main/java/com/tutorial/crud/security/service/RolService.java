@@ -23,4 +23,7 @@ public class RolService {
     public void save(Rol rol){
         rolRepository.save(rol);
     }
+    public void delete(int num){
+        rolRepository.deleteById(num);
+    }
 }
