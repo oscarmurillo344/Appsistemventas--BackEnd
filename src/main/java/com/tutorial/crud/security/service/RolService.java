@@ -16,14 +16,8 @@ public class RolService {
     @Autowired
     RolRepository rolRepository;
 
-    public Optional<Rol> getByRolNombre(RolNombre rolNombre){
-        return rolRepository.findByRolNombre(rolNombre);
-    }
-
+    public Optional<Rol> getByRolNombre(RolNombre rolNombre){ return rolRepository.findByRolNombre(rolNombre); }
     public void save(Rol rol){
         rolRepository.save(rol);
-    }
-    public void delete(int num){
-        rolRepository.deleteById(num);
     }
 }
