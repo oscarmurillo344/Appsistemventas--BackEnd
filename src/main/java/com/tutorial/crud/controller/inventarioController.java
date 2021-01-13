@@ -67,6 +67,7 @@ public class inventarioController {
         inven.setFecha(Calendar.getInstance());
         inven.setCantidad(invenDto.getCantidad());
         inven.setCantidadExist(invenDto.getCantidad());
+        inven.setExtras(invenDto.getExtras());
         inventarioservice.save(inven);
         return new ResponseEntity(new Mensaje("Actualizacion Exitosa"), HttpStatus.OK);
     }
