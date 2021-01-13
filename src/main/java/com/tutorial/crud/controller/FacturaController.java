@@ -95,7 +95,8 @@ public class FacturaController {
         if(fec.getUsuario().isEmpty())
             return new ResponseEntity(new Mensaje("No existe usuario"),HttpStatus.BAD_REQUEST);
 
-        List<VentasDay> listar=facturaservice.TotalFechasUser(fec.getUsuario(),fec.getFechaFirst(),fec.getFechaSecond());
+        List<VentasDay> listar=facturaservice.TotalFechasUser
+                (fec.getUsuario(),fec.getFechaFirst(),fec.getFechaSecond());
         return new ResponseEntity(listar,HttpStatus.OK);
     }
 

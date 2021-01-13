@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Repository
-public interface gastosRepository extends JpaRepository<gastos, Integer> {
+public interface    gastosRepository extends JpaRepository<gastos, Integer> {
 
     @Query(value = "SELECT * FROM gastos " +
             "where tipo= :tipo and CAST(fecha AS date) between CAST( :desde AS date) and CAST( :hasta AS date)",nativeQuery = true)
