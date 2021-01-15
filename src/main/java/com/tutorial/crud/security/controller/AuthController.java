@@ -101,7 +101,7 @@ public class AuthController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/deleteRol/{codigo}")
+    @DeleteMapping("/deleterol/{codigo}")
     public ResponseEntity<?> deleteRol(@PathVariable("codigo")int codigo){
         if(rolService.existeRol(codigo))
             return new ResponseEntity(new Mensaje("no existe rol"), HttpStatus.NOT_FOUND);
