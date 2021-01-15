@@ -57,6 +57,7 @@ public class AuthController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -97,5 +98,14 @@ public class AuthController {
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
         usuarioService.eliminarUser(id);
         return new ResponseEntity(new Mensaje("Usuario eliminado"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/deleteRol/{codigo}")
+    public ResponseEntity<?> deleteRol(@PathVariable("codigo")int codigo){
+        if(rolService.existeRol(codigo))
+            return new ResponseEntity(new Mensaje("no existe rol"), HttpStatus.NOT_FOUND);
+        rolService.eliminarRol(codigo);
+        return new ResponseEntity(new Mensaje("Rol eliminado"), HttpStatus.OK);
     }
 }

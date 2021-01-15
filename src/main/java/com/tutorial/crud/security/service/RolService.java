@@ -17,7 +17,10 @@ public class RolService {
     RolRepository rolRepository;
 
     public Optional<Rol> getByRolNombre(RolNombre rolNombre){ return rolRepository.findByRolNombre(rolNombre); }
-    public void save(Rol rol){
+    public void saveRol(Rol rol){
         rolRepository.save(rol);
     }
+    public void eliminarRol(int id){rolRepository.deleteById(id);}
+    public boolean existeRol(int id){return rolRepository.existsById(id);}
 }
+
