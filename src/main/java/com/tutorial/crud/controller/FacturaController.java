@@ -126,7 +126,7 @@ public class FacturaController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/totalfechadia")
+        @PostMapping("/totalfechadia")
     public ResponseEntity<List<VentasDay>> totalFechaDia(@RequestBody BetweenFechas fec){
         if(fec.getFechaFirst() == null )
             return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
