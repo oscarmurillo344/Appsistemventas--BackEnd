@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -53,7 +54,8 @@ public class FacturaController {
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
 
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
-                , factDto.getDatenow(),facturaservice.convertir(),factDto.getProductoId(),factDto.getCantidad());
+                , factDto.getDatenow(),facturaservice.convertir(),factDto.getDia()
+                ,factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(fact);
 
         inventario inventory=inventarioservice.ActulizarProduct(factDto.getProductoId());
@@ -88,6 +90,17 @@ public class FacturaController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/totalfecha")
+    public ResponseEntity<List<VentasDay>> totalFecha(@RequestBody BetweenFechas fec)
+    {
+        if(fec.getFechaFirst() == null )
+            return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
+
+        List<VentasDay> listar=facturaservice.TotalFechas(fec.getFechaFirst(),fec.getFechaSecond());
+        return new ResponseEntity(listar,HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/totalfechaUser")
     public ResponseEntity<List<VentasDay>> totalFechaUser(@RequestBody BetweenFechas fec){
         if(fec.getFechaFirst() == null )
@@ -101,28 +114,26 @@ public class FacturaController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/totalfechaHour")
-    public ResponseEntity<List<VentasDay>> totalFechaHoras(@RequestBody BetweenFechas fec){
+    @PostMapping("/totalfechauserdia")
+    public ResponseEntity<List<VentasDay>> totalFechaUserDia(@RequestBody BetweenFechas fec){
         if(fec.getFechaFirst() == null )
             return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
         if(fec.getUsuario().isEmpty())
             return new ResponseEntity(new Mensaje("No existe usuario"),HttpStatus.BAD_REQUEST);
-        List<VentasDay> listar=facturaservice.TotalFechasHour
-        (fec.getUsuario(),fec.getTiempoF(),fec.getTiempoS(),fec.getFechaFirst(),fec.getFechaSecond());
+        List<VentasDay> listar=facturaservice.TotalFechasDia
+        (fec.getFechaFirst(),fec.getFechaSecond(),fec.getDia());
         return new ResponseEntity(listar,HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/totalfecha")
-    public ResponseEntity<List<VentasDay>> totalFecha(@RequestBody BetweenFechas fec)
-    {
+    @PostMapping("/totalfechadia")
+    public ResponseEntity<List<VentasDay>> totalFechaDia(@RequestBody BetweenFechas fec){
         if(fec.getFechaFirst() == null )
             return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
-
-        List<VentasDay> listar=facturaservice.TotalFechas(fec.getFechaFirst(),fec.getFechaSecond());
+        if(fec.getUsuario().isEmpty())
+            return new ResponseEntity(new Mensaje("No existe usuario"),HttpStatus.BAD_REQUEST);
+        List<VentasDay> listar=facturaservice.TotalFechasDia
+                (fec.getFechaFirst(),fec.getFechaSecond(),fec.getDia());
         return new ResponseEntity(listar,HttpStatus.OK);
     }
-
-
-
 }
