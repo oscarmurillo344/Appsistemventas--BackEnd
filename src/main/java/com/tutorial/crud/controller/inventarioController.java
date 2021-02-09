@@ -22,7 +22,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/inventario")
-@CrossOrigin(origins = "https://asaderoweb.herokuapp.com/")
+@CrossOrigin(origins = "https://asaderoweb.herokuapp.com")
 public class inventarioController {
 
     @Autowired

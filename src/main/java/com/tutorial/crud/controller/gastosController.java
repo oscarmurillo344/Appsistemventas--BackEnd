@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/gastos")
-@CrossOrigin(origins = "https://asaderoweb.herokuapp.com/")
+@CrossOrigin(origins = "https://asaderoweb.herokuapp.com")
 public class gastosController {
 
         @Autowired

@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/factura")
-@CrossOrigin(origins = "https://asaderoweb.herokuapp.com/")
+@CrossOrigin(origins = "https://asaderoweb.herokuapp.com")
 public class FacturaController {
 
     @Autowired
