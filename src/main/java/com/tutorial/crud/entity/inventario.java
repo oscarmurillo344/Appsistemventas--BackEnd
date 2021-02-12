@@ -27,8 +27,10 @@ public class inventario {
 
     private String extras;
 
+    @NotNull
     private int cantidad;
 
+    @NotNull
     private int cantidadExist;
 
     public inventario(){}

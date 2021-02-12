@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="crud" />
         <module name="AsaderoServices_prod" />
+        <module name="Appsistemventas--BackEnd" />
         <module name="AsaderoServices_developer" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Appsistemventas--BackEnd" options="-parameters" />
       <module name="AsaderoServices_developer" options="-parameters" />
       <module name="AsaderoServices_prod" options="-parameters" />
       <module name="crud" options="-parameters" />
