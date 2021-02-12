@@ -26,6 +26,9 @@ public class facturacion {
     private Date tiempoactual;
 
     @NotNull
+    private String dia;
+
+    @NotNull
     @JoinTable(
             name = "rel_fact_product",
             joinColumns = @JoinColumn(name = "FK_Fact", nullable = false),
@@ -45,6 +48,7 @@ public class facturacion {
         this.usuario = usuario;
         this.datenow = datenow;
         this.tiempoactual = tiempoactual;
+        this.dia = dia;
         this.productoId = productoId;
         this.cantidad = cantidad;
     }
@@ -88,6 +92,10 @@ public class facturacion {
     public void setTiempoactual(Date tiempoactual) {
         this.tiempoactual = tiempoactual;
     }
+
+    public String getDia() { return dia; }
+
+    public void setDia(String dia) { this.dia = dia; }
 
     public Producto getProductoId() {
         return productoId;
