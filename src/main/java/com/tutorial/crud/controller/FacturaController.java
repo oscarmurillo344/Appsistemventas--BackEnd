@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -67,7 +68,7 @@ public class FacturaController {
             return new ResponseEntity(new Mensaje("cantidad debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
 
         facturacion fact = new facturacion(factDto.getNumeroFact(), factDto.getUsuarioId()
-                , factDto.getDatenow(),facturaservice.convertir(),factDto.getDia()
+                , factDto.getDatenow(),new Date(),factDto.getDia()
                 ,factDto.getProductoId(),factDto.getCantidad());
         facturaservice.save(fact);
 
