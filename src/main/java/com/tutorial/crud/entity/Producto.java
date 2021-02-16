@@ -11,6 +11,7 @@ public class Producto {
     private int id;
 
     @NotNull
+    @Column(unique = true)
     private String nombre;
 
     @NotNull
