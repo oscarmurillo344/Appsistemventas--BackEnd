@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/factura")
-@CrossOrigin(origins = "https://asaderoweb.herokuapp.com")
+@CrossOrigin(origins = {"https://asaderoweb.herokuapp.com","http://192.168.100.20"})
 public class FacturaController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class FacturaController {
     public ResponseEntity<List<facturacion>> list(@PathVariable("numero") int numero){
         try{
             if (!facturaservice.existsByNumero(numero))
-                return new ResponseEntity(new Mensaje("transacción no existente"), HttpStatus.NOT_FOUND);
+                return new ResponseEntity(new Mensaje("factura no existente"), HttpStatus.NOT_FOUND);
             List<facturacion> list = facturaservice.listaNumero(numero);
             return new ResponseEntity(list, HttpStatus.OK);
         }catch (DataAccessException ex){
