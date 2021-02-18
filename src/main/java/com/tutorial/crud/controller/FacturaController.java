@@ -66,6 +66,7 @@ public class FacturaController {
                 listaPollo.setPresa(listaPollo.getPresa()+Presa);
             }
         }else listaPollo.setPresa(listaPollo.getPresa()+Presa);
+        diaservice.Guardar(listaPollo);
         return new ResponseEntity(new Mensaje("factura eliminada"), HttpStatus.OK);
         }catch (DataAccessException ex){
             return new ResponseEntity(new Mensaje
