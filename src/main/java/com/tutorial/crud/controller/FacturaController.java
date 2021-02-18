@@ -4,9 +4,11 @@ import com.tutorial.crud.dto.Mensaje;
 import com.tutorial.crud.dto.BetweenFechas;
 import com.tutorial.crud.dto.VentasDay;
 import com.tutorial.crud.dto.facturaDto;
+import com.tutorial.crud.entity.diaPollos;
 import com.tutorial.crud.entity.facturacion;
 import com.tutorial.crud.entity.inventario;
 import com.tutorial.crud.service.FacturaService;
+import com.tutorial.crud.service.diaPolloService;
 import com.tutorial.crud.service.inventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -29,6 +31,8 @@ public class FacturaController {
     FacturaService facturaservice;
     @Autowired
     inventarioService inventarioservice;
+    @Autowired
+    diaPolloService diaservice;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/lista/{numero}")
@@ -49,9 +53,20 @@ public class FacturaController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
         try{
+            int Presa=0;
         if(!facturaservice.existsByNumero(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        facturaservice.eliminarFact(id);
+        List<facturacion> Lfacturas=facturaservice.eliminarFact(id);
+        for(facturacion factura : Lfacturas){
+            Presa+=factura.getProductoId().getPresa();
+        }
+        diaPollos listaPollo= diaservice.Listar(1);
+            while(Presa>8){
+                Presa-=8;
+                listaPollo.setPollo(listaPollo.getPollo()+1);
+                listaPollo.setPresa(listaPollo.getPresa()+Presa);
+            }
+            listaPollo.setPresa(listaPollo.getPresa()+Presa);
         return new ResponseEntity(new Mensaje("factura eliminada"), HttpStatus.OK);
         }catch (DataAccessException ex){
             return new ResponseEntity(new Mensaje

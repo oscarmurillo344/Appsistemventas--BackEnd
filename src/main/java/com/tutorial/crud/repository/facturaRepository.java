@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -71,6 +72,6 @@ public interface facturaRepository extends JpaRepository<facturacion, Integer> {
 
     boolean existsByNumeroFact(int id);
 
-    long deleteByNumeroFact(int id);
+    List<facturacion> deleteByNumeroFact(int id);
 
 }
