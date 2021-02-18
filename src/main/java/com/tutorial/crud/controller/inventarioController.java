@@ -146,10 +146,8 @@ public class inventarioController {
         diaPollos dia;
         if(!diaservice.Existe(1)){
             diaservice.Guardar(new diaPollos(0,0));
-            dia=diaservice.Listar(1);
-        }else{
-            dia=diaservice.Listar(1);
-        }
+            dia=new diaPollos(0,0);
+        }else dia=diaservice.Listar(1);
         dia.setPollo(update.getPollo());
         dia.setPresa(update.getPresa());
         diaservice.Guardar(dia);
