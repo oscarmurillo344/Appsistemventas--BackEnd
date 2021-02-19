@@ -60,7 +60,7 @@ public class FacturaController {
         for(facturacion factura : Lfacturas) presa+=factura.getProductoId().getPresa();
         diaPollos listaPollo= diaservice.Listar(1);
             System.out.println("valor: "+presa);
-        if(presa>8){
+        if(presa>=8){
             while(presa>=8){
                 presa-=8;
                 listaPollo.setPollo(listaPollo.getPollo()+1);
