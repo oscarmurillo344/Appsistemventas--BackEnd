@@ -112,7 +112,7 @@ public class FacturaController {
 
 
     @GetMapping("/numero")
-    public ResponseEntity<Integer> Numerofactura(){
+    public ResponseEntity<?> Numerofactura(){
         try{
         Integer listaN=facturaservice.MaximoValor();
         return new ResponseEntity(listaN, HttpStatus.OK);
@@ -125,7 +125,7 @@ public class FacturaController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/totalDay/{usu}")
-    public ResponseEntity<List<VentasDay>> Totalday(@PathVariable("usu") String usu){
+    public ResponseEntity<?> Totalday(@PathVariable("usu") String usu){
         try{
         List<VentasDay> l=facturaservice.TotalDia(usu);
         return new ResponseEntity(l, HttpStatus.OK);
@@ -138,7 +138,7 @@ public class FacturaController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/totalfecha")
-    public ResponseEntity<List<VentasDay>> totalFecha(@RequestBody BetweenFechas fec)
+    public ResponseEntity<?> totalFecha(@RequestBody BetweenFechas fec)
     {
         try{
         if(fec.getFechaFirst() == null )
@@ -155,7 +155,7 @@ public class FacturaController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/totalfechaUser")
-    public ResponseEntity<List<VentasDay>> totalFechaUser(@RequestBody BetweenFechas fec){
+    public ResponseEntity<?> totalFechaUser(@RequestBody BetweenFechas fec){
         try{
         if(fec.getFechaFirst() == null )
             return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
@@ -174,14 +174,14 @@ public class FacturaController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/totalfechauserdia")
-    public ResponseEntity<List<VentasDay>> totalFechaUserDia(@RequestBody BetweenFechas fec){
+    public ResponseEntity<?> totalFechaUserDia(@RequestBody BetweenFechas fec){
         try{
         if(fec.getFechaFirst() == null )
             return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
         if(fec.getUsuario().isEmpty())
             return new ResponseEntity(new Mensaje("No existe usuario"),HttpStatus.BAD_REQUEST);
-        List<VentasDay> listar=facturaservice.TotalFechasDia
-        (fec.getFechaFirst(),fec.getFechaSecond(),fec.getDia());
+        List<VentasDay> listar=facturaservice.TotalFechasUserDia
+        (fec.getUsuario(),fec.getFechaFirst(),fec.getFechaSecond(),fec.getDia());
         return new ResponseEntity(listar,HttpStatus.OK);
         }catch (DataAccessException ex){
             return new ResponseEntity(new Mensaje
@@ -190,9 +190,9 @@ public class FacturaController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+        @PreAuthorize("hasRole('ADMIN')")
         @PostMapping("/totalfechadia")
-    public ResponseEntity<List<VentasDay>> totalFechaDia(@RequestBody BetweenFechas fec){
+    public ResponseEntity<?> totalFechaDia(@RequestBody BetweenFechas fec){
         try{
         if(fec.getFechaFirst() == null )
             return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
@@ -201,6 +201,21 @@ public class FacturaController {
         List<VentasDay> listar=facturaservice.TotalFechasDia
                 (fec.getFechaFirst(),fec.getFechaSecond(),fec.getDia());
         return new ResponseEntity(listar,HttpStatus.OK);
+        }catch (DataAccessException ex){
+            return new ResponseEntity(new Mensaje
+                    ("Error: ".concat(ex.getMessage()).concat(", "+ex.getMostSpecificCause().getMessage())),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/totalfechasComp")
+    public ResponseEntity<?> totalFechaComp(@RequestBody BetweenFechas fec){
+        try{
+            if(fec.getFechaFirst() == null || fec.getFechaSecond() == null )
+                return new ResponseEntity(new Mensaje("No existe fecha"),HttpStatus.BAD_REQUEST);
+            List<VentasDay> listar=facturaservice.TotalFechasComplete
+                    (fec.getFechaFirst(),fec.getFechaSecond());
+            return new ResponseEntity(listar,HttpStatus.OK);
         }catch (DataAccessException ex){
             return new ResponseEntity(new Mensaje
                     ("Error: ".concat(ex.getMessage()).concat(", "+ex.getMostSpecificCause().getMessage())),
