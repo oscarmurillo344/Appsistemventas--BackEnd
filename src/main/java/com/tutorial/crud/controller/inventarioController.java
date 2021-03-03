@@ -140,7 +140,6 @@ public class inventarioController {
     @PutMapping("/pollotable")
     public ResponseEntity<?> PolloTable(@RequestBody actualizarPollo update)
     {
-        try{
         if(update.getPollo()<0)
             return new ResponseEntity(new Mensaje("Debe ser mayor a 0"),HttpStatus.BAD_REQUEST);
         diaPollos dia;
@@ -152,11 +151,6 @@ public class inventarioController {
         dia.setPresa(update.getPresa());
         diaservice.Guardar(dia);
         return new ResponseEntity(new Mensaje("Actualizacion exitosa"),HttpStatus.OK);
-        }catch (DataAccessException ex){
-            return new ResponseEntity(new Mensaje
-                    ("Error: ".concat(ex.getMessage()).concat(", "+ex.getMostSpecificCause().getMessage())),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping("/pollopresa")
