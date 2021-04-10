@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/factura")
-@CrossOrigin(origins = {"https://asaderoweb.herokuapp.com","http://192.168.100.20:4200"})
+@CrossOrigin(origins = {"https://asaderoweb.herokuapp.com","http://192.168.100.115:4200"})
 public class FacturaController {
 
     @Autowired
@@ -53,22 +53,25 @@ public class FacturaController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
         try{
-            int presa=0;
-        if(!facturaservice.existsByNumero(id))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        List<facturacion> Lfacturas=facturaservice.eliminarFact(id);
-        for(facturacion factura : Lfacturas) presa+=factura.getProductoId().getPresa();
-        diaPollos listaPollo= diaservice.Listar(1);
-            System.out.println("valor: "+presa);
-        if(presa>=8){
-            while(presa>=8){
-                presa-=8;
-                listaPollo.setPollo(listaPollo.getPollo()+1);
-                listaPollo.setPresa(listaPollo.getPresa()+presa);
+            int presa=0,cantidad=0,Totalpresa=0;
+            if(!facturaservice.existsByNumero(id))
+                return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+            List<facturacion> Lfacturas=facturaservice.eliminarFact(id);
+            for(facturacion factura : Lfacturas){
+                presa+=factura.getProductoId().getPresa();
+                cantidad=factura.getCantidad();
             }
-        }else listaPollo.setPresa(listaPollo.getPresa()+presa);
-        diaservice.Guardar(listaPollo);
-        return new ResponseEntity(new Mensaje("factura eliminada"), HttpStatus.OK);
+            Totalpresa=presa*cantidad;
+            diaPollos listaPollo= diaservice.Listar(1);
+            if(Totalpresa>=8){
+                while(Totalpresa>=8){
+                    Totalpresa-=8;
+                    listaPollo.setPollo(listaPollo.getPollo()+1);
+                }
+                listaPollo.setPresa(listaPollo.getPresa()+Totalpresa);
+            }else listaPollo.setPresa(listaPollo.getPresa()+Totalpresa);
+            diaservice.Guardar(listaPollo);
+            return new ResponseEntity(new Mensaje("factura eliminada"), HttpStatus.OK);
         }catch (DataAccessException ex){
             return new ResponseEntity(new Mensaje
                     ("Error: ".concat(ex.getMessage()).concat(", "+ex.getMostSpecificCause().getMessage())),
